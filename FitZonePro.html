@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>FitZone Pro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f1f3f6;
+        --card: #fff;
+        --ink: #14202b;
+        --mute: #66737f;
+        --line: #e0e5ea;
+        --hero: #14202b;
+        --heroink: #fff;
+        --acc: #ff4f1f;
+        --accink: #fff;
+        --ok: #12805c;
+        --bad: #c42b2b;
+        --soft: #f6f8fa;
+        --Basic: #66737f;
+        --Premium: #1f6feb;
+        --VIP: #9b5de5;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #0d141b;
+          --card: #17212b;
+          --ink: #e9eef3;
+          --mute: #93a1ae;
+          --line: #2a3745;
+          --hero: #101a24;
+          --acc: #ff6a3d;
+          --accink: #14202b;
+          --ok: #3ccf9a;
+          --bad: #ff7b7b;
+          --soft: #1d2935;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #0d141b;
+        --card: #17212b;
+        --ink: #e9eef3;
+        --mute: #93a1ae;
+        --line: #2a3745;
+        --hero: #101a24;
+        --acc: #ff6a3d;
+        --accink: #14202b;
+        --ok: #3ccf9a;
+        --bad: #ff7b7b;
+        --soft: #1d2935;
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, sans-serif;
+        line-height: 1.5;
+      }
+      header {
+        background: var(--hero);
+        color: var(--heroink);
+        padding: 22px 16px 74px;
+      }
+      .in {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 900;
+        font-size: 1.7rem;
+        letter-spacing: -0.02em;
+      }
+      .logo i {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--acc);
+        display: grid;
+        place-items: center;
+        font-style: normal;
+        font-size: 1.3rem;
+      }
+      .tagline {
+        opacity: 0.7;
+        font-size: 0.95rem;
+        margin: 6px 0 0;
+      }
+      .demo {
+        background: transparent;
+        color: var(--heroink);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font:
+          600 0.9rem "Archivo",
+          sans-serif;
+        cursor: pointer;
+      }
+      main {
+        max-width: 920px;
+        margin: -54px auto 0;
+        padding: 0 16px 48px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      @media (max-width: 560px) {
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stat {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 14px 16px;
+        box-shadow: 0 4px 14px rgba(20, 32, 43, 0.12);
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .ico {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.2rem;
+        flex: none;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.35rem;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .stat span {
+        color: var(--mute);
+        font-size: 0.85rem;
+      }
+      .meter {
+        height: 5px;
+        background: var(--line);
+        border-radius: 3px;
+        margin-top: 5px;
+        overflow: hidden;
+      }
+      .meter i {
+        display: block;
+        height: 100%;
+        background: var(--acc);
+        transition: width 0.4s;
+      }
+      nav {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 4px;
+        background: var(--card);
+        border-radius: 14px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(20, 32, 43, 0.07);
+      }
+      nav button {
+        flex: 1 0 auto;
+        border: 0;
+        background: none;
+        color: var(--mute);
+        font:
+          700 0.92rem "Archivo",
+          sans-serif;
+        padding: 10px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      nav button[aria-selected="true"] {
+        background: var(--acc);
+        color: var(--accink);
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--acc);
+        outline-offset: 2px;
+      }
+      .panel {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 8px rgba(20, 32, 43, 0.07);
+      }
+      .panel[hidden] {
+        display: none;
+      }
+      h2 {
+        margin: 0 0 4px;
+        font-size: 1.3rem;
+        font-weight: 800;
+      }
+      .hint {
+        color: var(--mute);
+        margin: 0 0 12px;
+        font-size: 0.92rem;
+      }
+      label {
+        display: block;
+        font-weight: 700;
+        font-size: 0.88rem;
+        margin: 14px 0 5px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 11px 13px;
+        font: inherit;
+        background: var(--soft);
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+      }
+      input:disabled,
+      select:disabled {
+        opacity: 0.5;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 520px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .plans label {
+        margin: 0;
+        cursor: pointer;
+      }
+      .plans input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+      }
+      .plans span {
+        display: block;
+        text-align: center;
+        border: 2px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 4px;
+        font-weight: 800;
+      }
+      .plans small {
+        display: block;
+        color: var(--mute);
+        font-weight: 600;
+      }
+      .plans input:checked + span {
+        border-color: var(--c);
+        background: var(--soft);
+      }
+      .plans input:focus-visible + span {
+        outline: 3px solid var(--acc);
+      }
+      .btn {
+        margin-top: 18px;
+        background: var(--acc);
+        color: var(--accink);
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 22px;
+        font:
+          800 1rem "Archivo",
+          sans-serif;
+        cursor: pointer;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+        margin-left: 8px;
+      }
+      .info {
+        background: var(--soft);
+        border-radius: 12px;
+        padding: 14px;
+        margin-top: 14px;
+      }
+      .big {
+        font-size: 1.5rem;
+        font-weight: 900;
+      }
+      .list {
+        max-height: 520px;
+        overflow: auto;
+        margin-top: 10px;
+      }
+      .m {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 4px;
+        border-bottom: 1px solid var(--line);
+      }
+      .av {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 800;
+        flex: none;
+      }
+      .m .n {
+        flex: 1;
+        min-width: 0;
+      }
+      .m .n b {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .m .n small {
+        color: var(--mute);
+      }
+      .m .d {
+        text-align: right;
+        font-weight: 800;
+        min-width: 92px;
+      }
+      .m .d small {
+        display: block;
+        font-weight: 600;
+      }
+      .on {
+        color: var(--ok);
+      }
+      .off {
+        color: var(--bad);
+      }
+      .tag {
+        display: inline-block;
+        padding: 1px 9px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #fff;
+        margin-right: 6px;
+      }
+      .chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .chips button {
+        border: 1.5px solid var(--line);
+        background: none;
+        color: var(--ink);
+        padding: 5px 13px;
+        border-radius: 999px;
+        font:
+          700 0.85rem "Archivo",
+          sans-serif;
+        cursor: pointer;
+      }
+      .chips button[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--card);
+        border-color: var(--ink);
+      }
+      .empty {
+        color: var(--mute);
+        padding: 22px 0;
+        text-align: center;
+      }
+      #toast {
+        position: fixed;
+        left: 50%;
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        transform: translate(-50%, 30px);
+        background: var(--ink);
+        color: var(--card);
+        padding: 11px 18px;
+        border-radius: 999px;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s;
+        max-width: 90vw;
+        text-align: center;
+        z-index: 9;
+      }
+      #toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      #toast.bad {
+        background: var(--bad);
+        color: #fff;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="in">
+        <div class="brand">
+          <div class="logo"><i>🏋️</i>FitZone Pro</div>
+          <button class="demo" id="demoBtn">Fill with demo members</button>
+        </div>
+        <p class="tagline">
+          Sign up members, collect fees and find anyone in seconds.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="stats">
+        <div class="stat">
+          <div class="ico" style="background: #1f6feb22">👥</div>
+          <div style="flex: 1">
+            <strong id="sMembers">0 / 100</strong><span>Members</span>
+            <div class="meter"><i id="sMeter" style="width: 0"></i></div>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="ico" style="background: #ff4f1f22">⏳</div>
+          <div><strong id="sDue">₹0</strong><span>Pending fees</span></div>
+        </div>
+        <div class="stat">
+          <div class="ico" style="background: #12805c22">✅</div>
+          <div><strong id="sPaid">₹0</strong><span>Collected</span></div>
+        </div>
+      </div>
+
+      <nav role="tablist" id="tabs">
+        <button role="tab" data-t="add" aria-selected="true">
+          ➕ Register
+        </button>
+        <button role="tab" data-t="pay" aria-selected="false">
+          💳 Billing
+        </button>
+        <button role="tab" data-t="dir" aria-selected="false">
+          📋 Directory
+        </button>
+        <button role="tab" data-t="edit" aria-selected="false">✏️ Edit</button>
+        <button role="tab" data-t="find" aria-selected="false">
+          🔍 Search
+        </button>
+      </nav>
+
+      <section class="panel" id="add">
+        <h2>Register new member</h2>
+        <p class="hint">Fill in the details and pick a plan.</p>
+        <label for="aName">Full name</label
+        ><input id="aName" autocomplete="off" placeholder="e.g. Priya Sharma" />
+        <div class="row">
+          <div>
+            <label for="aAge">Age</label
+            ><input
+              id="aAge"
+              type="number"
+              min="1"
+              max="120"
+              placeholder="25"
+            />
+          </div>
+          <div>
+            <label for="aMonths">Months enrolled</label
+            ><input id="aMonths" type="number" min="1" value="1" />
+          </div>
+        </div>
+        <label>Membership plan</label>
+        <div class="plans">
+          <label
+            ><input type="radio" name="plan" value="Basic" checked /><span
+              style="--c: var(--Basic)"
+              >Basic<small>₹500/mo</small></span
+            ></label
+          >
+          <label
+            ><input type="radio" name="plan" value="Premium" /><span
+              style="--c: var(--Premium)"
+              >Premium<small>₹1000/mo</small></span
+            ></label
+          >
+          <label
+            ><input type="radio" name="plan" value="VIP" /><span
+              style="--c: var(--VIP)"
+              >VIP<small>₹2000/mo</small></span
+            ></label
+          >
+        </div>
+        <button class="btn" id="addBtn">Add member</button>
+      </section>
+
+      <section class="panel" id="pay" hidden>
+        <h2>Billing &amp; fee payments</h2>
+        <p class="hint">Choose a member and record what they paid.</p>
+        <label for="pMember">Member</label
+        ><select id="pMember"></select>
+        <div class="info" id="pInfo"></div>
+        <label for="pAmt">Payment amount (₹)</label
+        ><input id="pAmt" type="number" min="1" step="any" placeholder="0" />
+        <button class="btn" id="payBtn">Record payment</button>
+      </section>
+
+      <section class="panel" id="dir" hidden>
+        <h2>Member directory</h2>
+        <p class="hint" id="dirCount"></p>
+        <div class="chips" id="dirChips"></div>
+        <div class="list" id="dirOut"></div>
+      </section>
+
+      <section class="panel" id="edit" hidden>
+        <h2>Edit member details</h2>
+        <p class="hint">Inactive members can't be edited until reactivated.</p>
+        <label for="eMember">Member</label
+        ><select id="eMember"></select>
+        <div id="eForm">
+          <label for="eName">Name</label><input id="eName" />
+          <div class="row">
+            <div>
+              <label for="eAge">Age</label
+              ><input id="eAge" type="number" min="1" max="120" />
+            </div>
+            <div>
+              <label for="ePlan">Membership plan</label>
+              <select id="ePlan">
+                <option>Basic</option>
+                <option>Premium</option>
+                <option>VIP</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn" id="saveBtn">Save changes</button
+          ><button class="btn ghost" id="toggleBtn"></button>
+        </div>
+      </section>
+
+      <section class="panel" id="find" hidden>
+        <h2>Search member</h2>
+        <p class="hint">Type any part of a name.</p>
+        <input id="qBox" autocomplete="off" placeholder="Search by name…" />
+        <div class="list" id="findOut"></div>
+      </section>
+    </main>
+    <div id="toast" role="status"></div>
+
+    <script>
+      const MAX = 100;
+      const FEES = { Basic: 500, Premium: 1000, VIP: 2000 };
+      const members = []; // {name, age, plan, fee, due, paid, active}
+      let filter = "All";
+      const $ = (id) => document.getElementById(id);
+      const money = (n) =>
+        "₹" + n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+      const esc = (s) =>
+        s.replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      const initials = (n) =>
+        n
+          .split(/\s+/)
+          .map((w) => w[0])
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+
+      let tt;
+      function toast(text, ok = true) {
+        const t = $("toast");
+        t.textContent = text;
+        t.className = "show" + (ok ? "" : " bad");
+        clearTimeout(tt);
+        tt = setTimeout(() => (t.className = ""), 2600);
+      }
+
+      $("tabs").addEventListener("click", (e) => {
+        const b = e.target.closest("button");
+        if (!b) return;
+        document
+          .querySelectorAll("#tabs button")
+          .forEach((x) => x.setAttribute("aria-selected", x === b));
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => (p.hidden = p.id !== b.dataset.t));
+        refresh();
+      });
+
+      // Register
+      $("addBtn").onclick = () => {
+        const name = $("aName").value.trim(),
+          age = parseInt($("aAge").value),
+          months = parseInt($("aMonths").value);
+        if (members.length >= MAX)
+          return toast("Gym is full! Cannot add more members.", false);
+        if (!name) return toast("Enter a name.", false);
+        if (!(age > 0)) return toast("Enter a valid age.", false);
+        if (!(months > 0))
+          return toast("Months enrolled must be at least 1.", false);
+        const plan = document.querySelector("input[name=plan]:checked").value,
+          fee = FEES[plan];
+        members.push({
+          name,
+          age,
+          plan,
+          fee,
+          due: fee * months,
+          paid: 0,
+          active: true,
+        });
+        toast(`Member M${members.length} added – ${money(fee * months)} due.`);
+        $("aName").value = "";
+        $("aAge").value = "";
+        $("aMonths").value = 1;
+        refresh();
+      };
+
+      // Billing
+      function payInfo() {
+        const m = members[$("pMember").value];
+        $("pInfo").innerHTML = m
+          ? `<b>${esc(m.name)}</b> <span class="tag" style="background:var(--${m.plan})">${m.plan}</span><br>
+       Total ${money(m.due)} · Paid ${money(m.paid)}<div class="big">${money(m.due - m.paid)} <small style="font-size:.9rem;color:var(--mute)">pending</small></div>`
+          : "Register a member first.";
+      }
+      $("pMember").onchange = payInfo;
+      $("payBtn").onclick = () => {
+        const m = members[$("pMember").value],
+          amt = parseFloat($("pAmt").value);
+        if (!m) return toast("Invalid member.", false);
+        if (m.due - m.paid <= 0)
+          return toast("No pending balance for this member.", false);
+        if (!(amt > 0)) return toast("Enter a payment amount above 0.", false);
+        m.paid += amt;
+        $("pAmt").value = "";
+        toast(
+          `Payment recorded. Pending: ${money(Math.max(0, m.due - m.paid))}`,
+        );
+        refresh();
+      };
+
+      // Member rows (shared by directory and search)
+      function rows(ids, showDue) {
+        if (!ids.length) return '<div class="empty">No members to show.</div>';
+        return ids
+          .map((i) => {
+            const m = members[i],
+              left = m.due - m.paid;
+            return `<div class="m"><div class="av" style="background:var(--${m.plan})">${esc(initials(m.name))}</div>
+      <div class="n"><b>${esc(m.name)}</b><small>M${i + 1} · <span class="tag" style="background:var(--${m.plan})">${m.plan}</span>Age ${m.age}</small></div>
+      <div class="d">${showDue ? (left > 0 ? money(left) + '<small style="color:var(--mute)">due</small>' : '<span class="on">Paid up</span>') : ""}
+      <small class="${m.active ? "on" : "off"}">${m.active ? "Active" : "Inactive"}</small></div></div>`;
+          })
+          .join("");
+      }
+      function renderDir() {
+        $("dirChips").innerHTML = ["All", "Basic", "Premium", "VIP", "Inactive"]
+          .map(
+            (f) =>
+              `<button aria-pressed="${f === filter}" data-f="${f}">${f}</button>`,
+          )
+          .join("");
+        const ids = members
+          .map((m, i) => i)
+          .filter(
+            (i) =>
+              filter === "All" ||
+              (filter === "Inactive"
+                ? !members[i].active
+                : members[i].plan === filter),
+          );
+        $("dirCount").textContent = members.length
+          ? `Showing ${ids.length} of ${members.length} members.`
+          : "No members registered yet.";
+        $("dirOut").innerHTML = members.length
+          ? rows(ids, true)
+          : '<div class="empty">Register your first member to see them here.</div>';
+      }
+      $("dirChips").onclick = (e) => {
+        const b = e.target.closest("button");
+        if (b) {
+          filter = b.dataset.f;
+          renderDir();
+        }
+      };
+
+      // Edit
+      function loadEdit() {
+        const m = members[$("eMember").value];
+        $("eForm").hidden = !m;
+        if (!m) return;
+        $("eName").value = m.name;
+        $("eAge").value = m.age;
+        $("ePlan").value = m.plan;
+        $("toggleBtn").textContent = m.active ? "Mark inactive" : "Mark active";
+        ["eName", "eAge", "ePlan", "saveBtn"].forEach(
+          (id) => ($(id).disabled = !m.active),
+        );
+      }
+      $("eMember").onchange = loadEdit;
+      $("saveBtn").onclick = () => {
+        const m = members[$("eMember").value],
+          name = $("eName").value.trim(),
+          age = parseInt($("eAge").value);
+        if (!m) return;
+        if (!name || !(age > 0))
+          return toast("Enter a valid name and age.", false);
+        m.name = name;
+        m.age = age;
+        m.plan = $("ePlan").value;
+        m.fee = FEES[m.plan];
+        toast("Member details updated.");
+        refresh();
+      };
+      $("toggleBtn").onclick = () => {
+        const m = members[$("eMember").value];
+        if (!m) return;
+        m.active = !m.active;
+        toast(`${m.name} is now ${m.active ? "active" : "inactive"}.`);
+        refresh();
+      };
+
+      // Search
+      $("qBox").oninput = renderFind;
+      function renderFind() {
+        const raw = $("qBox").value,
+          q = raw.trim().toLowerCase();
+        const ids = members
+          .map((m, i) => i)
+          .filter((i) => members[i].name.toLowerCase().includes(q));
+        $("findOut").innerHTML = !members.length
+          ? '<div class="empty">No members registered yet.</div>'
+          : ids.length
+            ? rows(ids, false)
+            : `<div class="empty">No members found matching '${esc(raw)}'.</div>`;
+      }
+
+      // Demo data: fills the gym up to 100 members
+      $("demoBtn").onclick = () => {
+        const F = [
+          "Aarav",
+          "Priya",
+          "Rohan",
+          "Sneha",
+          "Vikram",
+          "Ananya",
+          "Karan",
+          "Meera",
+          "Arjun",
+          "Isha",
+          "Rahul",
+          "Neha",
+          "Aditya",
+          "Pooja",
+          "Sanjay",
+          "Divya",
+          "Manish",
+          "Kavya",
+          "Nikhil",
+          "Riya",
+        ];
+        const L = [
+          "Sharma",
+          "Patel",
+          "Singh",
+          "Iyer",
+          "Khan",
+          "Mehta",
+          "Nair",
+          "Gupta",
+          "Das",
+          "Reddy",
+        ];
+        const r = (n) => Math.floor(Math.random() * n),
+          plans = Object.keys(FEES);
+        const start = members.length;
+        while (members.length < MAX) {
+          const plan = plans[r(3)],
+            fee = FEES[plan],
+            months = 1 + r(12),
+            due = fee * months;
+          members.push({
+            name: F[r(F.length)] + " " + L[r(L.length)],
+            age: 16 + r(50),
+            plan,
+            fee,
+            due,
+            paid: [0, due, Math.round(due / 2)][r(3)],
+            active: r(10) > 0,
+          });
+        }
+        toast(
+          members.length > start
+            ? `Added ${members.length - start} demo members.`
+            : "Gym is already full.",
+          members.length > start,
+        );
+        refresh();
+      };
+
+      function refresh() {
+        const opts = members
+          .map(
+            (m, i) =>
+              `<option value="${i}">M${i + 1} – ${esc(m.name)}</option>`,
+          )
+          .join("");
+        ["pMember", "eMember"].forEach((id) => {
+          const v = $(id).value;
+          $(id).innerHTML = opts;
+          if (v && members[v]) $(id).value = v;
+        });
+        $("sMembers").textContent = `${members.length} / ${MAX}`;
+        $("sMeter").style.width = (members.length / MAX) * 100 + "%";
+        $("sDue").textContent = money(
+          members.reduce((s, m) => s + Math.max(0, m.due - m.paid), 0),
+        );
+        $("sPaid").textContent = money(members.reduce((s, m) => s + m.paid, 0));
+        payInfo();
+        loadEdit();
+        renderDir();
+        renderFind();
+      }
+      refresh();
+    </script>
+  </body>
+</html>
